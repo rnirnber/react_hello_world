@@ -1,0 +1,2 @@
+C:\Users\rnirn\source\repos\eResonateMedia\eResonateMedia\obj\Debug\eResonateMedia.njsproj.CoreCompileInputs.cache
+C:\Users\rnirn\source\repos\eResonateMedia\eResonateMedia\bin\Microsoft.NodejsTools.WebRole.dll
