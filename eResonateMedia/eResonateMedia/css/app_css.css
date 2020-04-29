@@ -1,0 +1,204 @@
+/* General Elements */
+*
+{
+    font-family: Ubuntu;
+    color: #FFFFFF;
+    padding: 0px;
+    margin: 0px;
+    box-sizing: border-box;
+}
+body {
+    background: #191B1E;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    min-height: 100%;
+}
+#root
+{
+    min-height: 100vh;
+}
+.pseudo_table
+{
+    display: table;
+    table-layout: fixed;
+    width: 100%;
+}
+.pseudo_td
+{
+    display: table-cell;
+    vertical-align: middle;
+}
+
+/*
+    Header Elements
+*/
+.header
+{
+    background: #292C32;
+    width: 100%;
+}
+.header_ball
+{
+    width: 80px;
+    height: 80px;
+    max-width: 80px;
+    max-height: 80px;
+    border-radius: 50%;
+    background: #357DF7;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.header
+{
+    height: 160px;
+    width: 100%;
+}
+.header_table
+{
+    height: 160px;
+    width: 100%;
+
+}
+/* mobile customizations for header */
+@media(max-width: 767px)
+{
+    .header_ball
+    {
+        width: 60px;
+        height: 60px;
+    }
+    .header
+    {
+        height: 130px;
+    }
+    .header_pseud_table
+    {
+        height: 130px;
+    }
+}
+
+.magnifying_glass
+{
+    float: right;
+    margin-right: 13.5%;
+    margin-top: 7.5px;
+}
+@media(max-width: 767px)
+{
+    .magnifying_glass
+    {
+        display: none;
+    }
+}
+
+/*
+    The form
+*/
+.top_form_spacer
+{
+    width: 1px;
+    height: 100px;
+}
+.form_header
+{
+    font-weight: normal;
+    text-align: center;
+    margin-bottom: 50px;
+    margin-top: 25px;
+}
+@media(max-width: 767px)
+{
+    .form_header
+    {
+        font-weight: bold;
+    }
+}
+.form_root
+{
+    z-index: 2;
+    position: relative;
+}
+.form_bg_img
+{
+    width: 100%;
+    position: relative;
+    z-index: 1;
+}
+
+.form_root center
+{
+    width: 25%;
+    margin-left: auto;
+    margin-right: auto;
+}
+.form_lbl
+{
+    text-align: left;
+    margin-bottom: 10px;
+}
+.form_input
+{
+    width: 100%;
+}
+.fields_root
+{
+    width: 25%;
+    margin-left: auto;
+    margin-right: auto;
+}
+@media(max-width: 933px)
+{
+    .fields_root
+    {
+        width: 50%;
+    }
+}
+.form_input input, .form_input textarea
+{
+    width: 100%;
+    background: transparent;
+    margin-bottom: 25px;
+    border: 1px solid #6B6D6F;
+    min-height: 2.75em;
+    border-radius: 0.5em;
+    padding: 0.75em;
+    box-sizing: border-box;
+}
+.form_input textarea
+{
+    min-height: 7em;
+}
+.submit_button
+{
+    background: #5b9af8;
+    text-align: center;
+    padding: 0.5em;
+    margin-bottom: 75px;
+    border-radius: 0.75em;
+    cursor: pointer;
+}
+.actual_msg
+{
+    color: #8e8989;
+}
+.error, .actual_msg, .success
+{
+    display: none;
+}
+.error, .success
+{
+    margin-right: 0.5em;
+}
+@media(max-width: 767px)
+{
+    .form_bg_img
+    {
+        visibility: hidden;
+    }
+    .fields_root
+    {
+        width: 94%;
+    }
+}

@@ -33,9 +33,10 @@
   <ItemGroup>
     <Content Include="dist\app-bundle.js" />
     <Content Include="dist\app-bundle.js.map" />
-    <Content Include="dist\app_static_css.css">
+    <Content Include="css\app_css.css">
       <SubType>Code</SubType>
     </Content>
+    <Content Include="images\form_bg.jpg" />
     <Content Include="images\magnifying_glass.jpg" />
     <Content Include="index.html">
       <SubType>Code</SubType>
@@ -58,6 +59,7 @@
   <ItemGroup>
     <Folder Include="dist\" />
     <Folder Include="images\" />
+    <Folder Include="css\" />
   </ItemGroup>
   <Import Project="$(VSToolsPath)\Node.js Tools\Microsoft.NodejsToolsV2.targets" />
   <ProjectExtensions>

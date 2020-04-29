@@ -108,6 +108,7 @@ var __extends = (this && this.__extends) || (function () {
 })();
 var React = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 var ReactDOM = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
+var validator = __webpack_require__(/*! email-validator */ "./node_modules/email-validator/index.js");
 /*export class Hello extends React.Component {
     render() {
         return (
@@ -123,13 +124,142 @@ var HeaderElements = /** @class */ (function (_super) {
         _this.render = (function () {
             return React.createElement("div", { className: "header" },
                 React.createElement("div", { className: "pseudo_table header_table" },
-                    React.createElement("div", { class: "pseudo_td" },
+                    React.createElement("div", { className: "pseudo_td" },
                         React.createElement("img", { className: "magnifying_glass", src: "/images/magnifying_glass.jpg" }),
                         React.createElement("div", { className: "header_ball" }))));
         });
         return _this;
     }
     return HeaderElements;
+}(React.Component));
+var TextInput = /** @class */ (function () {
+    function TextInput() {
+        this.render = (function () {
+            return React.createElement("input", { type: "text" });
+        });
+    }
+    return TextInput;
+}());
+var FormElement = /** @class */ (function (_super) {
+    __extends(FormElement, _super);
+    function FormElement() {
+        var _this = _super !== null && _super.apply(this, arguments) || this;
+        _this.componentDidMount = (function () {
+            /*
+             * The image gets rendered on top, so calculate the margin top of the form
+             *
+             */
+            var form = document.querySelector(".form_root");
+            var img = document.querySelector(".form_bg_img");
+            var img_completed = false;
+            var temp_interval = setInterval(function () {
+                img_completed = (img.complete);
+                console.log(img_completed);
+                if (img_completed) {
+                    clearInterval(temp_interval);
+                    var img_height = img.offsetHeight;
+                    console.log(img_height);
+                    img.style.height = form.clientHeight.toString() + "px";
+                    var new_img_height = img.clientHeight + 75; // +75 because the margin-bottom isn't getting returned...
+                    console.log(new_img_height);
+                    form.style.marginTop = "-" + new_img_height.toString() + "px";
+                }
+            }, 50);
+            setTimeout(function () {
+            }, 1000);
+        });
+        _this.id_validation_fn_mapping = {
+            "name": (function (str) {
+                // some vietname names are two characters long...
+                return str.length > 1;
+            }),
+            "phone": (function (str) {
+                var digits = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "0"];
+                var digits_found = [];
+                if (str.trim().length > 0) {
+                    str.trim().split("").map(function (character) {
+                        if (digits.indexOf(character) > -1) {
+                            digits_found.push(character);
+                        }
+                    });
+                }
+                return digits_found.length === 10;
+            }),
+            "email": (function (str) {
+                return validator.validate(str.trim());
+            }),
+            "msg": (function (str) {
+                return str.trim().length > 0;
+            })
+        };
+        _this.keyUpDelegate = (function (ev) {
+            if (ev.keyCode === 9) {
+                return;
+            }
+            var element = ev.target;
+            var id = element.id;
+            var value = element.value;
+            var error_msg_root = element.parentElement.previousSibling;
+            var result = _this.id_validation_fn_mapping[id](value);
+            if (result === true) {
+                error_msg_root.querySelectorAll(".actual_msg, .error").forEach(function (el) {
+                    el.style.display = "none";
+                });
+                error_msg_root.querySelector(".success").style.display = "inline-block";
+            }
+            else {
+                error_msg_root.querySelectorAll(".actual_msg, .error").forEach(function (el) {
+                    el.style.display = "inline-block";
+                });
+                error_msg_root.querySelector(".success").style.display = "none";
+            }
+        });
+        _this.render = (function () {
+            return React.createElement(React.Fragment, null,
+                React.createElement("img", { src: "/images/form_bg.jpg", className: "form_bg_img" }),
+                React.createElement("div", { className: "pseudo_table" },
+                    React.createElement("div", { className: "pseudo_td" },
+                        React.createElement("form", { className: "form_root" },
+                            React.createElement("div", { className: "top_form_spacer" }),
+                            React.createElement("h1", { className: "form_header" }, "Report a Problem"),
+                            React.createElement("div", { className: "fields_root" },
+                                React.createElement("div", { className: "form_lbl" }, "Your Name"),
+                                React.createElement("div", { className: "error_msg" },
+                                    React.createElement("p", null,
+                                        React.createElement("span", { className: "error" }, "\uD83D\uDEAB"),
+                                        React.createElement("span", { className: "success" }, "\u2713"),
+                                        React.createElement("span", { className: "actual_msg" }, "The first name field must be provided."))),
+                                React.createElement("div", { className: "form_input" },
+                                    React.createElement("input", { type: "text", id: "name", onKeyUp: _this.keyUpDelegate })),
+                                React.createElement("div", { className: "form_lbl" }, "Phone Number"),
+                                React.createElement("div", { className: "error_msg" },
+                                    React.createElement("p", null,
+                                        React.createElement("span", { className: "error" }, "\uD83D\uDEAB"),
+                                        React.createElement("span", { className: "success" }, "\u2713"),
+                                        React.createElement("span", { className: "actual_msg" }, "Please provide a phone number."))),
+                                React.createElement("div", { className: "form_input" },
+                                    React.createElement("input", { type: "text", id: "phone", onKeyUp: _this.keyUpDelegate })),
+                                React.createElement("div", { className: "form_lbl" }, "Email"),
+                                React.createElement("div", { className: "error_msg" },
+                                    React.createElement("p", null,
+                                        React.createElement("span", { className: "error" }, "\uD83D\uDEAB"),
+                                        React.createElement("span", { className: "success" }, "\u2713"),
+                                        React.createElement("span", { className: "actual_msg" }, "A valid email address is required."))),
+                                React.createElement("div", { className: "form_input" },
+                                    React.createElement("input", { type: "text", id: "email", onKeyUp: _this.keyUpDelegate })),
+                                React.createElement("div", { className: "form_lbl" }, "Message"),
+                                React.createElement("div", { className: "error_msg" },
+                                    React.createElement("p", null,
+                                        React.createElement("span", { class: "error" }, "\uD83D\uDEAB"),
+                                        React.createElement("span", { className: "success" }, "\u2713"),
+                                        React.createElement("span", { className: "actual_msg" }, "Please type a detailed message"))),
+                                React.createElement("div", { className: "form_input" },
+                                    React.createElement("textarea", { id: "msg", onKeyUp: _this.keyUpDelegate })),
+                                React.createElement("div", { className: "submit_button" }, "Submit"))))));
+        });
+        return _this;
+    }
+    return FormElement;
 }(React.Component));
 /*class ChildElement extends React.Component
 {
@@ -146,8 +276,49 @@ class ParentElement extends React.Component
         return <p>Parent Element</p>;
     });
 }*/
-ReactDOM.render([React.createElement(HeaderElements, null) /*, <ChildElement />*/], document.getElementById('root'));
+ReactDOM.render([React.createElement(HeaderElements, null), React.createElement(FormElement, null) /*, <ChildElement />*/], document.getElementById('root'));
 
+
+/***/ }),
+
+/***/ "./node_modules/email-validator/index.js":
+/*!***********************************************!*\
+  !*** ./node_modules/email-validator/index.js ***!
+  \***********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var tester = /^[-!#$%&'*+\/0-9=?A-Z^_a-z{|}~](\.?[-!#$%&'*+\/0-9=?A-Z^_a-z`{|}~])*@[a-zA-Z0-9](-*\.?[a-zA-Z0-9])*\.[a-zA-Z](-?[a-zA-Z0-9])+$/;
+// Thanks to:
+// http://fightingforalostcause.net/misc/2006/compare-email-regex.php
+// http://thedailywtf.com/Articles/Validating_Email_Addresses.aspx
+// http://stackoverflow.com/questions/201323/what-is-the-best-regular-expression-for-validating-email-addresses/201378#201378
+exports.validate = function(email)
+{
+	if (!email)
+		return false;
+		
+	if(email.length>254)
+		return false;
+
+	var valid = tester.test(email);
+	if(!valid)
+		return false;
+
+	// Further checking of some things regex can't handle
+	var parts = email.split("@");
+	if(parts[0].length>64)
+		return false;
+
+	var domainParts = parts[1].split(".");
+	if(domainParts.some(function(part) { return part.length>63; }))
+		return false;
+
+	return true;
+}
 
 /***/ }),
 
